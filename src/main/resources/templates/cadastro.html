@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/login-style.css">
+    <title>Cadastro Dream Car</title>
+</head>
+
+<body>
+    <header>
+        <h1>Concessionária Dream Car</h1>
+    </header>
+
+    <main>
+        <form id="loginForm">
+            <h3>Cadastro</h3>
+
+            <section id="section-email">
+                <label for="email">Email:<br></label>
+                <input type="text" id="email" name="email" required placeholder="seuemail@email.com">
+            </section>
+
+            <section id="section-senha">
+                <label for="senha">Senha:<br></label>
+                <input type="password" id="senha" name="senha" required placeholder="********">
+            </section>
+
+            <section id="section-confirmar">
+                <label for="confirmar-senha">Repita sua senha:<br></label>
+                <input type="password" id="confirmar-senha" name="confirmarSenha" required placeholder="********">
+            </section>
+
+            <button type="submit" id="botao-login">Cadastrar</button>
+
+            <p id="mensagem"></p>
+
+        </form>
+    </main>
+
+    <script src="../static/js/cadastro.js"></script>
+
+</body>
+
+</html>
