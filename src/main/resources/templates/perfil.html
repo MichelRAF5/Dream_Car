@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/perfil.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <title>Perfil Dream Car</title>
+  </head>
+  <body>
+    <div id="header-container"></div>
+
+    <main class="perfil">
+      <section class="perfil-card">
+        <div class="perfil-topo">
+          <h1 id="nome-completo">Carregando...</h1>
+          <p class="perfil-email" id="email"></p>
+        </div>
+
+        <p class="perfil-erro" id="erro" hidden></p>
+
+        <div class="perfil-secao">
+          <h2>Dados pessoais</h2>
+          <dl class="perfil-grade">
+            <div><dt>Nome</dt><dd id="nome">-</dd></div>
+            <div><dt>Sobrenome</dt><dd id="sobrenome">-</dd></div>
+            <div><dt>Telefone</dt><dd id="telefone">-</dd></div>
+          </dl>
+        </div>
+
+        <div class="perfil-secao">
+          <h2>Endereço</h2>
+          <dl class="perfil-grade">
+            <div><dt>CEP</dt><dd id="cep">-</dd></div>
+            <div><dt>Rua</dt><dd id="rua">-</dd></div>
+            <div><dt>Número</dt><dd id="numero">-</dd></div>
+            <div><dt>Bairro</dt><dd id="bairro">-</dd></div>
+            <div><dt>Cidade</dt><dd id="cidade">-</dd></div>
+            <div><dt>Estado</dt><dd id="estado">-</dd></div>
+            <div class="largo"><dt>Observação</dt><dd id="observacao">-</dd></div>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <script src="../static/js/header.js"></script>
+    <script src="../static/js/perfil.js"></script>
+  </body>
+</html>

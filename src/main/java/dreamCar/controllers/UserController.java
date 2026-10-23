@@ -1,5 +1,7 @@
 package dreamCar.controllers;
 
+import dreamCar.dto.CadastroDTO;
+import dreamCar.entities.Endereco;
 import dreamCar.entities.User;
 import dreamCar.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
-        if (userService.camposInvalidos(user)) {
+        if (userService.camposInvalidos(user.getEmail(), user.getSenha())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email e senha são obrigatórios");
         }
 
@@ -35,15 +37,26 @@ public class UserController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrar(@RequestBody User user) {
-        if (userService.camposInvalidos(user)) {
+    public ResponseEntity<String> cadastrar(@RequestBody CadastroDTO dto) {
+        if (userService.camposInvalidos(dto.getEmail(), dto.getSenha())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email e senha são obrigatórios");
         }
 
-        if (userService.cadastrar(user.getEmail(), user.getSenha())) {
+        if (userService.cadastrar(dto)) {
             return new ResponseEntity<>("Registro cadastrado com sucesso", HttpStatus.CREATED);
         }
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body("Email já registrado no sistema");
+    }
+
+    @GetMapping("/perfil")
+    public ResponseEntity<CadastroDTO> perfil(@RequestParam String email) {
+        CadastroDTO dto = userService.exibirCadastro(email);
+
+        if (dto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(dto);
     }
 }

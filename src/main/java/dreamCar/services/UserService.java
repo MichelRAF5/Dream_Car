@@ -1,7 +1,11 @@
 package dreamCar.services;
 
+import dreamCar.dto.CadastroDTO;
+import dreamCar.entities.Endereco;
 import dreamCar.entities.User;
+import dreamCar.repositories.EnderecoRepository;
 import dreamCar.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,23 +14,30 @@ import java.util.Optional;
 @Service
 public class UserService { // As classes Service realizam apenas os métodos das entidades fazendo o uso dos métodos do Repository
     private final UserRepository userRepository;
+    private final EnderecoRepository enderecoRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     // Construtor para o Spring injetar o UserRepository
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, EnderecoRepository enderecoRepository) {
         this.userRepository = userRepository;
+        this.enderecoRepository = enderecoRepository;
     }
 
     /* Verifica a existência do email no db
-     caso não exista salva o email e a senha (como hash) no db e retorna true
+     caso não exista salva o user (senha como hash) e o endereço no db e retorna true,
      caso exista retorna false */
-    public boolean cadastrar(String email, String senha) {
-        if (userRepository.existsByEmail(email)) {
+    @Transactional // Garante o rollback caso um dos saves dê errado
+    public boolean cadastrar(CadastroDTO dto) {
+        if (userRepository.existsByEmail(dto.getEmail())) {
             return false;
         }
 
-        User u = new User(email, encoder.encode(senha)); // Bcrypt faz o set da senha como hash
-        userRepository.save(u); // Salva o user no db
+        User u = new User(dto.getEmail(), encoder.encode(dto.getSenha()), dto.getNome(), dto.getSobrenome(), dto.getTelefone());
+        userRepository.save(u);
+
+        Endereco e = new Endereco(u, dto.getCep(), dto.getRua(), dto.getNumero(), dto.getBairro(), dto.getCidade(), dto.getEstado(), dto.getObservacao());
+        enderecoRepository.save(e);
+
         return true;
     }
 
@@ -45,7 +56,20 @@ public class UserService { // As classes Service realizam apenas os métodos das
     }
 
     // Verifica se os campos estão vazios e retorna true caso estejam
-    public boolean camposInvalidos(User user) {
-        return user.getEmail() == null || user.getEmail().isBlank() || user.getSenha() == null || user.getSenha().isBlank();
+    public boolean camposInvalidos(String email, String senha) {
+        return email == null || email.isBlank() || senha == null || senha.isBlank();
+    }
+
+    // Retorna os dados do cadastro
+    public CadastroDTO exibirCadastro(String email) {
+        User usuario = userRepository.findByEmail(email).orElse(null);
+
+        if (usuario == null) {
+            return null;
+        }
+
+        Endereco endereco = enderecoRepository.findByUsuario(usuario).orElse(null);
+
+        return new CadastroDTO(usuario, endereco);
     }
 }

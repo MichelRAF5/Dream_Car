@@ -1,0 +1,19 @@
+{
+  "email": "cliente@email.com",
+  "senha": "senhaSegura123",
+  "nome": "João",
+  "sobrenome": "Silva",
+  "telefone": "31999998888",
+  "cep": "30130000",
+  "rua": "Avenida Afonso Pena",
+  "numero": "1500",
+  "bairro": "Centro",
+  "cidade": "Belo Horizonte",
+  "estado": "MG",
+  "observacao": "Apartamento 302"
+}
+
+{
+  "email": "cliente@email.com",
+  "senha": "senhaSegura123"
+}

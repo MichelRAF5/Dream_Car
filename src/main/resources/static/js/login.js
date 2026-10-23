@@ -1,34 +1,45 @@
-const form = document.getElementById('loginForm');
-const mensagem = document.getElementById('mensagem');
+const formLogin = document.getElementById('loginForm');
+const mensagemLogin = document.getElementById('mensagem');
+const botaoLogin = document.getElementById('botao-login');
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // impede o envio padrão do formulário
+// Se a página não vem do Spring (porta 8080), aponta direto para a API
+const API_URL = window.location.port === '8080' ? '' : 'http://localhost:8080';
 
-    // Monta o objeto {email: "...", senha: "..."} a partir dos campos (usa o atributo name)
-    const dados = Object.fromEntries(new FormData(form));
+formLogin.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Impede a atualização padrão da página
+    mensagemLogin.textContent = '';
+    botaoLogin.disabled = true;
+
+    // Extrai email e senha usando o atributo name dos inputs
+    const dadosLogin = Object.fromEntries(new FormData(formLogin));
 
     try {
-        const resposta = await fetch('http://localhost:8080/users/login', {
+        const resposta = await fetch(`${API_URL}/users/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dados)
+            body: JSON.stringify(dadosLogin)
         });
 
-        // A API devolve texto puro ("Login efetuado..." ou "Email ou senha errados")
         const texto = await resposta.text();
 
         if (resposta.ok) {
-            mostrarMensagem(texto, true);
-            window.location.href = 'home.html'; // descomente para redirecionar após o login
+            mensagemLogin.style.color = '#4CAF50';
+            mensagemLogin.textContent = texto;
+            
+            // Redireciona para a home após o login bem-sucedido
+            setTimeout(() => {
+                localStorage.setItem('usuarioEmail', dadosLogin.email); // Armazena o email do user logado atualmente no armaenamento local (usado para a exibição posterior dos dados do cliente)
+                window.location.href = 'home.html';
+            }, 1000);
         } else {
-            mostrarMensagem(texto, false);
-            form.senha.value = ''; // limpa a senha digitada
+            mensagemLogin.style.color = 'red';
+            mensagemLogin.textContent = texto;
+            if (formLogin.senha) formLogin.senha.value = ''; // Limpa o campo de senha
+            botaoLogin.disabled = false;
         }
     } catch (erro) {
-        mostrarMensagem('Não foi possível conectar ao servidor.', false);
+        mensagemLogin.style.color = 'red';
+        mensagemLogin.textContent = 'Não foi possível conectar ao servidor.';
+        botaoLogin.disabled = false;
     }
 });
-
-function mostrarMensagem(texto, sucesso) {
-    mensagem.textContent = texto;               // textContent evita injeção de HTML
-}

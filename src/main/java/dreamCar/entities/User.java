@@ -16,10 +16,22 @@ public class User {
     @Column(nullable=false, length = 255)
     private String senha;
 
+    @Column(nullable = false, length = 255)
+    private String nome;
+
+    @Column(nullable = false, length = 255)
+    private String sobrenome;
+
+    @Column(nullable = false, length = 11)
+    private String telefone;
+
     // Construtores
-    public User(String email, String senha) {
+    public User(String email, String senha, String nome, String sobrenome, String telefone) {
         this.email = email;
         this.senha = senha;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.telefone = telefone;
     }
 
     public User() {
@@ -38,6 +50,18 @@ public class User {
         return email;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
     // Setters
     public void setEmail(String email) {
         this.email = email;
@@ -47,11 +71,26 @@ public class User {
         this.senha = senha;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
-                ", id=" + id +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", telefone='" + telefone + '\'' +
                 '}';
     }
 }

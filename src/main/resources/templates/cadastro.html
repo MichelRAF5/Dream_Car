@@ -1,46 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/login-style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/login-style.css" />
     <title>Cadastro Dream Car</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>Concessionária Dream Car</h1>
+      <h1>Concessionária Dream Car</h1>
     </header>
 
     <main>
-        <form id="loginForm">
-            <h3>Cadastro</h3>
+      <form id="cadastroForm">
+        <h3>Cadastro</h3>
 
-            <section id="section-email">
-                <label for="email">Email:<br></label>
-                <input type="text" id="email" name="email" required placeholder="seuemail@email.com">
-            </section>
+        <!-- Seção 1: Dados de Acesso -->
+        <fieldset>
+          <legend>Dados de Acesso</legend>
 
-            <section id="section-senha">
-                <label for="senha">Senha:<br></label>
-                <input type="password" id="senha" name="senha" required placeholder="********">
-            </section>
+          <section>
+            <label for="email">E-mail:*<br /></label>
+            <input type="email" id="email" name="email" required placeholder="seuemail@email.com" />
+          </section>
 
-            <section id="section-confirmar">
-                <label for="confirmar-senha">Repita sua senha:<br></label>
-                <input type="password" id="confirmar-senha" name="confirmarSenha" required placeholder="********">
-            </section>
+          <section>
+            <label for="senha">Senha:*<br /></label>
+            <input type="password" id="senha" name="senha" required placeholder="********" />
+          </section>
 
-            <button type="submit" id="botao-login">Cadastrar</button>
+          <section>
+            <label for="confirmar-senha">Repita sua senha:*<br /></label>
+            <input type="password" id="confirmar-senha" name="confirmarSenha" required placeholder="********" />
+          </section>
+        </fieldset>
 
-            <p id="mensagem"></p>
+        <!-- Seção 2: Dados Pessoais -->
+        <fieldset>
+          <legend>Dados Pessoais</legend>
 
-        </form>
+          <section>
+            <label for="nome">Nome:*<br /></label>
+            <input type="text" id="nome" name="nome" required placeholder="João" />
+          </section>
+
+          <section>
+            <label for="sobrenome">Sobrenome:*<br /></label>
+            <input type="text" id="sobrenome" name="sobrenome" required placeholder="Silva" />
+          </section>
+
+          <section>
+            <label for="telefone">Telefone celular:*<br /></label>
+            <input type="tel" id="telefone" name="telefone" required placeholder="31999998888" />
+          </section>
+        </fieldset>
+
+        <!-- Seção 3: Endereço -->
+        <fieldset>
+          <legend>Endereço</legend>
+
+          <section>
+            <label for="cep">CEP:*<br /></label>
+            <input type="text" id="cep" name="cep" required placeholder="30130000" maxlength="8" />
+          </section>
+
+          <section>
+            <label for="rua">Rua:*<br /></label>
+            <input type="text" id="rua" name="rua" required placeholder="Avenida Afonso Pena" />
+          </section>
+
+          <section>
+            <label for="numero">Número:*<br /></label>
+            <input type="text" id="numero" name="numero" required placeholder="1500" />
+          </section>
+
+          <section>
+            <label for="bairro">Bairro:*<br /></label>
+            <input type="text" id="bairro" name="bairro" required placeholder="Centro" />
+          </section>
+
+          <section>
+            <label for="cidade">Cidade:*<br /></label>
+            <input type="text" id="cidade" name="cidade" required placeholder="Belo Horizonte" />
+          </section>
+
+          <section>
+            <label for="estado">Estado (UF):*<br /></label>
+            <input type="text" id="estado" name="estado" required placeholder="MG" maxlength="2" />
+          </section>
+
+          <section>
+            <label for="observacao">Observação / Complemento:<br /></label>
+            <input type="text" id="observacao" name="observacao" placeholder="Apartamento 302" />
+          </section>
+        </fieldset>
+
+        <br />
+        <button type="submit" id="botao-cadastrar">Cadastrar</button>
+
+        <p id="mensagem"></p>
+      </form>
     </main>
 
     <script src="../static/js/cadastro.js"></script>
-
-</body>
-
+  </body>
 </html>
